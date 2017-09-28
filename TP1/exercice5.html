@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title> Calculatrice</title>
+    <script>
+
+        function resultat() {
+            var z = document.getElementById('affichage');
+            z.value = eval(z.value);
+        }
+
+
+        function touche(t) {
+            var z = document.getElementById('affichage');
+            z.value += t;
+        }
+
+        function special(nom) {
+            var z = document.getElementById('affichage');
+            z.value = Math.sqrt(eval(z.value));
+        }
+    </script>
+</head>
+<body>
+<input type='text' name='zone' id='affichage' /><br />
+<input type='button' value='1' onClick='touche(1)' />
+<input type='button' value='2' onClick='touche(2)' />
+<input type='button' value='+' onClick='touche("+")' />
+<input type='button' value='&radic;' onClick='special("sqrt")' />
+<input type='button' value='=' onClick='resultat()' />
+</body>
+</html>

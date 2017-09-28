@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bonjour</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script>
+        function afficher() {
+            var ajout = document.getElementById("aEnvoyer");
+            var element = document.getElementById("Remplacer");
+            element.innerHTML = ajout.value;
+        }
+    </script>
+</head>
+<body>
+    <div id="Remplacer"> Texte à remplacer</div>
+
+    <textarea rows="5" cols="10" id="aEnvoyer" name="texte"
+              onfocus="this.value=''">
+        Teste
+    </textarea>
+    <button onclick="afficher()">Lancer la fonction</button>
+
+<script>
+
+</script>
+</body>
+</html>

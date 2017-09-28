@@ -1,0 +1,25 @@
+<html>
+<head>
+    <title>Retour sur les tableaux</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script>
+        function afficherTableau () {
+            var tab = new Array(10);
+            tab[-3]=6;
+            tab[15]=5;
+            tab[19]=5;
+            tab["aa"]=17;
+            // afficher le contenu de la variable
+            for (x in tab){
+                console.log(tab[x]);
+            }
+            console.log(tab.length);
+
+
+        }
+    </script>
+</head>
+<body>
+<script>afficherTableau();</script>
+</body>
+</html>

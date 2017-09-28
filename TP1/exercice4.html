@@ -1,0 +1,48 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Exemple timer simple</title>
+    <script>
+
+        var t;
+        function timeMessage2(){
+
+        }
+
+        function init(){
+            temps = prompt("Entrez votre temps : ");
+            if(Number(temps)){
+                document.getElementById("Temps").innerHTML = temps;
+            }
+            else {
+                alert("Entrez un nombre");
+            }
+        }
+
+        function start(){
+           if(temps==0){
+               return end();
+           }
+           document.getElementById("Temps").innerHTML = temps;
+            console.log(temps);
+            temps-=1;
+           t=setTimeout("start()",1000);
+
+        }
+
+
+        function end(){
+            clearTimeout(t);
+            return alert("fin");
+        }
+    </script>
+</head>
+
+<body>
+<h1 id="Temps">Temps non def</h1>
+<input type="button" value="Init" onClick="init()" />
+<input type="button" value="Start" onclick="start()" />
+<input type="button" value="End" onclick="end()" />
+
+</body>
+</html>
