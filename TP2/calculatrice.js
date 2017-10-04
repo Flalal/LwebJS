@@ -21,9 +21,22 @@ var tableBoutons = {
     14:{balise:"BR",attributs:null},
     15:{balise:"INPUT",attributs:{type:"button",id:"0",value:0,'class':"bouton-double"}},
     16:{balise:"INPUT",attributs:{type:"button",id:"3",value:3,'class':"bouton-simple"}},
-    17:{balise:"INPUT",attributs:{type:"button",id:"-",value:"-",'class':"bouton-simple"}},
+    17:{balise:"INPUT",attributs:{type:"button",id:"+",value:"+"        ,'class':"bouton-simple"}},
     18:{balise:"BR",attributs:null},
-    19:{balise:"INPUT",attributs:{type:"button",id:"-",value:"=",'class':"bouton-quadruple"}}
+    19:{balise:"INPUT",attributs:{type:"button",id:"=",value:"=",'class':"bouton-quatriple"}}
+};
+
+var tableBoutonsScientifique = {
+    0:{balise:"INPUT",attributs:{type:"button",id:"racine",value:'&radic;','class':"bouton-simple"}},
+    1:{balise:"BR",attributs:null},
+    2:{balise:"INPUT",attributs:{type:"button",id:"log",value:'log','class':"bouton-simple"}},
+    3:{balise:"BR",attributs:null},
+    4:{balise:"INPUT",attributs:{type:"button",id:"carre",value:'x²','class':"bouton-simple"}},
+    5:{balise:"BR",attributs:null},
+    6:{balise:"INPUT",attributs:{type:"button",id:"expo",value:'x!','class':"bouton-simple"}},
+    7:{balise:"BR",attributs:null},
+    8:{balise:"INPUT",attributs:{type:"button",id:"...",value:'...','class':"bouton-simple"}},
+    9:{balise:"BR",attributs:null},
 };
 
 
@@ -39,36 +52,32 @@ function ajouterNoeud (div, tab) {
         }
     }
     div.appendChild(bouton);
-    if (typeof(parametres)=='function') {
-        initEventHandlers(bouton,'click',parametres);
-    } else if (typeof(parametres)== 'undefined'){
-        initEventHandlers(bouton, 'click', function () {alert("Je suis en vacances !");} );
+    if (typeof(parametres)== 'undefined'){
+        if(attributs != null) {
+            if(attributs['value']=='='){
+                initEventHandlers(bouton, 'click',function(){resultat();});
+            }
+            else {
+                initEventHandlers(bouton, 'click', function () {
+                    touche(attributs['value']);
+                });
+            }
+        }
+        else {
+            return;
+        }
     }
 }
 
-
-
-
-function modeCalculatrice (mode) {
-    alert("Mode : "+mode);
+function touche(t) {
+    var resultat = document.getElementById('resultat');
+    resultat.innerHTML += t;
 }
-function initButton() {
-    var btn1 = document.getElementById('modeClassique');
-    initEventHandlers(btn1, 'click', function() {modeCalculatrice(0);});
-    var btn2 = document.getElementById('modeScientifique');
-    initEventHandlers(btn2, 'click', function() {modeCalculatrice(1);});
-} // initButton
 
-function initEventHandlers(element, event, fx) {
-    if (element.addEventListener)
-        element.addEventListener(event, fx, false);
-    else if (element.attachEvent)
-        element.attachEvent('on' + event, fx);
-} // observe
-
-initEventHandlers(window, 'load', initButton);
-
-
+function resultat() {
+    var resultat = document.getElementById('resultat');
+    resultat.value = eval(resultat.value);
+}
 
 function verifMode(mode){
     var body = document.getElementsByTagName("body").item(0);
@@ -86,7 +95,7 @@ function verifMode(mode){
     }
 }
 
-function modeCalculatrice(mode){
+function modeCalculatrice(mode){-
     verifMode(mode);
 
     var body = document.getElementsByTagName("body").item(0);
@@ -117,6 +126,12 @@ function modeCalculatrice(mode){
 
         modeScience.disabled = true;
         modeClassique.disabled = false;
+        for(var j in tableBoutons) {
+            ajouterNoeud(divLaCalculatrice,tableBoutons[j]);
+        }
+        for(var k in tableBoutonsScientifique){
+            ajouterNoeud(divLaCalculatriceScientifique,tableBoutonsScientifique[k]);
+        }
         return;
     }
 
@@ -126,5 +141,31 @@ function modeCalculatrice(mode){
     modeClassique.disabled = true;
     modeScience.disabled = false;
 
+    for(var i in tableBoutons) {
+        ajouterNoeud(divLaCalculatrice, tableBoutons[i]);
+    }
+
+
 
 }
+
+//==============================================================================
+//==============================================================================
+//==============================================================================
+
+function initButton() {
+    var btn1 = document.getElementById('modeClassique');
+    initEventHandlers(btn1, 'click', function() {modeCalculatrice(0);});
+    var btn2 = document.getElementById('modeScientifique');
+    initEventHandlers(btn2, 'click', function() {modeCalculatrice(1);});
+} // initButton
+
+function initEventHandlers(element, event, fx) {
+    if (element.addEventListener)
+        element.addEventListener(event, fx, false);
+    else if (element.attachEvent)
+        element.attachEvent('on' + event, fx);
+} // observe
+
+initEventHandlers(window, 'load', initButton);
+
