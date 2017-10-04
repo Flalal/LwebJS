@@ -1,33 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title> Calculatrice</title>
     <script>
-
+        // On ajoute une fonction supplémentaire à la classe Math
+        Math.puissance2 = function(x) {
+            return x * x;
+        }
         function resultat() {
-            var z = document.getElementById('affichage');
+            var z = document.getElementById('z');
             z.value = eval(z.value);
         }
 
-
         function touche(t) {
-            var z = document.getElementById('affichage');
+            var z = document.getElementById('z');
             z.value += t;
         }
 
         function special(nom) {
-            var z = document.getElementById('affichage');
-            z.value = Math.sqrt(eval(z.value));
+            var z = document.getElementById('z');
+            var val = eval(z.value);
+            var fct = 'Math.' + nom;
+            z.value = eval(fct + '(' + val + ')');
         }
+
     </script>
 </head>
 <body>
-<input type='text' name='zone' id='affichage' /><br />
+<input type='text' name='zone' id='z' /><br />
+<input type='button' value='7' onClick='touche(7)' />
+<input type='button' value='8' onClick='touche(8)' />
+<input type='button' value='9' onClick='touche(9)' />
+<br/>
+<input type='button' value='4' onClick='touche(4)' />
+<input type='button' value='5' onClick='touche(5)' />
+<input type='button' value='6' onClick='touche(6)' />
+
+<br />
 <input type='button' value='1' onClick='touche(1)' />
 <input type='button' value='2' onClick='touche(2)' />
+<input type='button' value='3' onClick='touche(3)' />
+
+<br />
+<input type='button' value='0' onClick='touche(0)' />
+<input type='button' value='.' onClick='touche(".")' />
 <input type='button' value='+' onClick='touche("+")' />
+
+<br />
+<input type='button' value='-' onClick='touche("-")' />
+<input type='button' value='*' onClick='touche("*")' />
+<input type='button' value='/' onClick='touche("/")' />
+<br/>
 <input type='button' value='&radic;' onClick='special("sqrt")' />
-<input type='button' value='=' onClick='resultat()' />
+<input type='button' value='log' onClick='special("log")' />
+<input type='button' value='x&sup2;' onClick='special("puissance2")' />
+<br />
 </body>
 </html>

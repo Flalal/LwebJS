@@ -1,0 +1,42 @@
+.bouton-simple{
+    width:30px;
+    height:30px;
+}
+.bouton-double{
+    width:60px;
+    height:30px;
+}
+.bouton-quatriple {
+    width:120px;
+    height:30px;
+}
+.zone-classique{
+    width:120px;
+    height:30px;
+}
+.zone-scientifique{
+    width:150px;
+    height:30px;
+}
+.resultat-classique{
+    width:120px;
+    height:30px;
+    border:solid 1px black;
+}
+.resultat-scientifique{
+    width:150px;
+    height:30px;
+    border:solid 1px black;
+}
+.calc-simple{
+    width:120px;
+    height:155px;
+    border:solid 1px black;
+    float : left;
+}
+.calc-scientifique{
+    width:30px;
+    height:155px;
+    border:solid 1px black;
+    float : left;
+}
