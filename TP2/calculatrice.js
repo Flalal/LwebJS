@@ -20,27 +20,26 @@ var tableBoutons = {
     13:{balise:"INPUT",attributs:{type:"button",id:"-",value:"-",'class':"bouton-simple"}},
     14:{balise:"BR",attributs:null},
     15:{balise:"INPUT",attributs:{type:"button",id:"0",value:0,'class':"bouton-double"}},
-    16:{balise:"INPUT",attributs:{type:"button",id:"3",value:3,'class':"bouton-simple"}},
-    17:{balise:"INPUT",attributs:{type:"button",id:"+",value:"+"        ,'class':"bouton-simple"}},
+    16:{balise:"INPUT",attributs:{type:"button",id:".",value:".",'class':"bouton-simple"}},
+    17:{balise:"INPUT",attributs:{type:"button",id:"+",value:"+"    ,'class':"bouton-simple"}},
     18:{balise:"BR",attributs:null},
-    19:{balise:"INPUT",attributs:{type:"button",id:"=",value:"=",'class':"bouton-quatriple"}}
+    19:{balise:"INPUT",attributs:{type:"button",id:"=",value:"=",'class':"bouton-quatriple"}},
+    20:{balise:"INPUT",attributs:{type:"button",id:"",value:"Clear",'class':"bouton-quatriple"}}
 };
 
+
 var tableBoutonsScientifique = {
-    0:{balise:"INPUT",attributs:{type:"button",id:"racine",value:'&radic;','class':"bouton-simple"}},
+    0:{balise:"INPUT",attributs:{type:"button",id:"sqrt",value:'&radic;','class':"bouton-simple"}},
     1:{balise:"BR",attributs:null},
     2:{balise:"INPUT",attributs:{type:"button",id:"log",value:'log','class':"bouton-simple"}},
     3:{balise:"BR",attributs:null},
-    4:{balise:"INPUT",attributs:{type:"button",id:"carre",value:'x²','class':"bouton-simple"}},
+    4:{balise:"INPUT",attributs:{type:"button",id:"puissance2",value:'x²','class':"bouton-simple"}},
     5:{balise:"BR",attributs:null},
-    6:{balise:"INPUT",attributs:{type:"button",id:"expo",value:'x!','class':"bouton-simple"}},
+    6:{balise:"INPUT",attributs:{type:"button",id:"fact",value:'x!','class':"bouton-simple"}},
     7:{balise:"BR",attributs:null},
     8:{balise:"INPUT",attributs:{type:"button",id:"...",value:'...','class':"bouton-simple"}},
     9:{balise:"BR",attributs:null},
 };
-
-
-
 
 function ajouterNoeud (div, tab) {
     var bouton = document.createElement(tab['balise']);
@@ -57,6 +56,12 @@ function ajouterNoeud (div, tab) {
             if(attributs['value']=='='){
                 initEventHandlers(bouton, 'click',function(){resultat();});
             }
+            if(attributs['id']=='sqrt' || attributs['id']=='log' || attributs['id'] == 'puissance2' || attributs['id']=='fact'){
+                initEventHandlers(bouton, 'click', function(){ special(attributs['id']);})
+            }
+            if(attributs['value'] == 'Clear'){
+                initEventHandlers(bouton, 'click', function(){ reset();})
+            }
             else {
                 initEventHandlers(bouton, 'click', function () {
                     touche(attributs['value']);
@@ -69,6 +74,20 @@ function ajouterNoeud (div, tab) {
     }
 }
 
+function reset(){
+    document.getElementById('resultat') = "";
+}
+
+Math.puissance2 = function (x){
+    return x*x;
+};
+
+Math.fact = function (x) {
+    if(x==1)
+        return 1;
+    return Math.fact(x-1)*x;
+};
+
 function touche(t) {
     var resultat = document.getElementById('resultat');
     resultat.innerHTML += t;
@@ -76,7 +95,14 @@ function touche(t) {
 
 function resultat() {
     var resultat = document.getElementById('resultat');
-    resultat.value = eval(resultat.value);
+    resultat.innerHTML = eval(resultat.innerHTML );
+}
+
+function special(nom){
+    var z = document.getElementById('resultat');
+    var val = eval(z.innerHTML);
+    var fct = 'Math.' + nom;
+    z.innerHTML = eval(fct + '(' + val + ')');
 }
 
 function verifMode(mode){
