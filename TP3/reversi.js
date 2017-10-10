@@ -35,7 +35,6 @@ function ajouterBouton (colonne, numBouton, valeur) {
 }
 
 function couleurClic(i){
-    afficheCliquable();
     if(tabBoutons[i].getAttribute('class') != BOUTON_JOUABLE ) {
         alert('Veuillez cliquer sur une bonne case');
         return;
@@ -50,6 +49,7 @@ function couleurClic(i){
     }
     alert('Au joueur : ' + aQuiLeTour);
     masquerCliquable();
+    afficheCliquable();
 }
 
 function masquerCliquable(){
@@ -63,36 +63,44 @@ function afficheCliquable() {
     if (aQuiLeTour == 1) {
         for (var i = 1; i < tabBoutons.length; i++) {
             if (tabBoutons[i].getAttribute('class') == BOUTON_JOUEUR2 && verifModulo(i)) {
-                try {
-                    if (tabBoutons[i + 1].getAttribute('class') == BOUTON_NEUTRE)
-                        tabBoutons[i + 1].setAttribute('class', BOUTON_JOUABLE);
-                    if (tabBoutons[i - 1].getAttribute('class') == BOUTON_NEUTRE)
-                        tabBoutons[i - 1].setAttribute('class', BOUTON_JOUABLE);
-                    if (tabBoutons[i + dimension].getAttribute('class') == BOUTON_NEUTRE)
-                        tabBoutons[i + dimension].setAttribute('class', BOUTON_JOUABLE);
-                    if (tabBoutons[i - dimension].getAttribute('class') == BOUTON_NEUTRE)
-                        tabBoutons[i - dimension].setAttribute('class', BOUTON_JOUABLE);
-                }catch (exception_var_){}
-
+                setAttributDe(i);
+                verifSetAttributDe(i);
             }
         }
     }
     else {
         for (var i = 1; i < tabBoutons.length; i++) {
             if (tabBoutons[i].getAttribute('class') == BOUTON_JOUEUR1 && verifModulo(i)) {
-                try {
-                    if (tabBoutons[i + 1].getAttribute('class') == BOUTON_NEUTRE)
-                        tabBoutons[i + 1].setAttribute('class', BOUTON_JOUABLE);
-                    if (tabBoutons[i - 1].getAttribute('class') == BOUTON_NEUTRE)
-                        tabBoutons[i - 1].setAttribute('class', BOUTON_JOUABLE);
-                    if (tabBoutons[i + dimension].getAttribute('class') == BOUTON_NEUTRE)
-                        tabBoutons[i + dimension].setAttribute('class', BOUTON_JOUABLE);
-                    if (tabBoutons[i - dimension].getAttribute('class') == BOUTON_NEUTRE)
-                        tabBoutons[i - dimension].setAttribute('class', BOUTON_JOUABLE);
-                }catch (exception_var_1){}
+                setAttributDe(i);
+                verifSetAttributDe(i);
             }
         }
     }
+}
+
+function setAttributDe(i){
+    try {
+        if (tabBoutons[i + 1].getAttribute('class') == BOUTON_NEUTRE)
+            tabBoutons[i + 1].setAttribute('class', BOUTON_JOUABLE);
+        if (tabBoutons[i - 1].getAttribute('class') == BOUTON_NEUTRE)
+            tabBoutons[i - 1].setAttribute('class', BOUTON_JOUABLE);
+        if (tabBoutons[i + dimension].getAttribute('class') == BOUTON_NEUTRE)
+            tabBoutons[i + dimension].setAttribute('class', BOUTON_JOUABLE);
+        if (tabBoutons[i - dimension].getAttribute('class') == BOUTON_NEUTRE)
+            tabBoutons[i - dimension].setAttribute('class', BOUTON_JOUABLE);
+        if (tabBoutons[i + dimension + 1].getAttribute('class') == BOUTON_NEUTRE)
+            tabBoutons[i + dimension + 1].setAttribute('class', BOUTON_JOUABLE);
+        if (tabBoutons[i + dimension - 1].getAttribute('class') == BOUTON_NEUTRE)
+            tabBoutons[i + dimension - 1].setAttribute('class', BOUTON_JOUABLE);
+        if (tabBoutons[i - dimension + 1].getAttribute('class') == BOUTON_NEUTRE)
+            tabBoutons[i - dimension + 1].setAttribute('class', BOUTON_JOUABLE);
+        if (tabBoutons[i - dimension - 1].getAttribute('class') == BOUTON_NEUTRE)
+            tabBoutons[i - dimension - 1].setAttribute('class', BOUTON_JOUABLE);
+    }catch (exception_var_1){}
+}
+
+function verifSetAttributDe(i){
+
 }
 
 function verifModulo(i){
@@ -149,6 +157,7 @@ function couleurDebut(){
     tabBoutons[milieuMilieu+dimension+1].setAttribute("class",BOUTON_JOUEUR1);
     tabBoutons[milieuMilieu+1].setAttribute("class",BOUTON_JOUEUR2);
     tabBoutons[milieuMilieu+dimension].setAttribute("class",BOUTON_JOUEUR2);
+    afficheCliquable();
 }
 
 function initPanneauDeCommandes() {
