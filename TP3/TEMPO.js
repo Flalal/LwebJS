@@ -67,7 +67,7 @@ function masquerCliquable(){
 }
 
 function afficheCliquable() {
-    if (aQuiLeTour == 1) {
+    if (aQuiLeTour == 2) {
         for (var i = 1; i < tabBoutons.length; i++) {
             if (tabBoutons[i].getAttribute('class') == BOUTON_JOUEUR2 && verifModulo(i)) {
                 setAttributClassDe(i);
@@ -163,119 +163,48 @@ function verifSetAttributDe(i){
     if(verifColVersBas(i)){
         alert("Il y en a un en dessous");
     }
-    if(verifRawVersDroite(i)) {
-        alert("Il y en a un à droite ")
-    }
+    /*if(verifRawVersDroite(i)){
+     alert("Il y en a un à droite ")
+     }
      if(verifRawVersGauche(i)) {
      alert("Il y en a un a gauche");
      }
      if(verifDiagoVersHautGauche(i)){
      alert("Il y en a un vers Haut Gauche");
      }
-     if(verifDiagoVersHautDroite(i)){
-     alert("Il y en a un vers Haut Droite");
+     if(verifDiagoVersHautDroit(i)){
+     alert("Il y en a un vers Haut Gauche");
      }
      if(verifDiagoVersBasGauche(i)){
-     alert("Il y en a un vers Bas Gauche");
+     alert("Il y en a un vers Haut Gauche");
      }
-     if(verifDiagoVersBasDroite(i)){
-     alert("Il y en a un vers Bas Gauche");
-     }
+     if(verifDiagoVersBasDroit(i)){
+     alert("Il y en a un vers Haut Gauche");
+     }*/
     //verifRaw(i);
-    //verifDiago(i);*/
+    //verifDiago(i);
 }
-
- function verifColVersHaut(i) {
-     i -= dimension;
-     if (i < 0)
-         return false;
-     if (aQuiLeTour == 2 && tabBoutons[i].getAttribute('class') == BOUTON_JOUEUR1) {
-         return true;
-     }
-     return verifColVersHaut(i);
+/*
+ function verifColVersHaut(i){
+ i-=dimension;
+ if (i<0)
+ return false;
+ if(aQuiLeTour == 2 && tabBoutons[i].getAttribute('class') == BOUTON_JOUEUR1 ) {
+ return true;
+ }
+ return verifColVersHaut(i);
  }
 
- function verifColVersBas(i) {
-     i += dimension;
-     if (i > dimension * dimension)
-         return false;
-     if (aQuiLeTour == 2 && tabBoutons[i].getAttribute('class') == BOUTON_JOUEUR1) {
-         return true;
-     }
-     return verifColVersBas(i);
+ function verifColVersBas(i){
+ i+=dimension;
+ if (i>dimension*dimension)
+ return false;
+ if(aQuiLeTour == 2 && tabBoutons[i].getAttribute('class') == BOUTON_JOUEUR1 ) {
+ return true;
  }
- function verifRawVersDroite(i){
-     i++;
-     if (i % dimension == 1)
-         return false;
-     if (aQuiLeTour == 2 && tabBoutons[i].getAttribute('class') == BOUTON_JOUEUR1) {
-         return true;
-     }
-     return verifRawVersDroite(i);
+ return verifColVersBas(i);
  }
-function verifRawVersGauche(i){
-    i--;
-    if (i % dimension == 0)
-        return false;
-    if (aQuiLeTour == 2 && tabBoutons[i].getAttribute('class') == BOUTON_JOUEUR1) {
-        return true;
-    }
-    return verifRawVersGauche(i);
-}
-function verifDiagoVersHautDroite(i){
-    if(i%dimension==0)
-        return false;
-    i -= dimension - 1;
-    if (i <= 0 )
-        return false;
-    if (aQuiLeTour == 2 && tabBoutons[i].getAttribute('class') == BOUTON_JOUEUR1) {
-        return true;
-    }
-
-    return verifDiagoVersHautDroite(i);
-}
-
-function verifDiagoVersBasDroite(i){
-    if(i%dimension==1)
-        return false;
-    i += dimension + 1;
-    if (i > dimension*dimension )
-        return false;
-    if (aQuiLeTour == 2 && tabBoutons[i].getAttribute('class') == BOUTON_JOUEUR1) {
-        return true;
-    }
-
-    return verifDiagoVersBasDroite(i);
-}
-function verifDiagoVersBasGauche(i){
-    if(i%dimension==1)
-        return false;
-    i -= dimension - 1;
-    if (i > dimension*dimension )
-        return false;
-    if (aQuiLeTour == 2 && tabBoutons[i].getAttribute('class') == BOUTON_JOUEUR1) {
-        return true;
-    }
-
-    return verifDiagoVersBasGauche(i);
-}
-
-function verifDiagoVersHautGauche(i){
-    if(i%dimension==1)
-        return false;
-    i -= dimension + 1;
-    alert(i);
-    if (i > dimension*dimension )
-        return false;
-    if (aQuiLeTour == 2 && tabBoutons[i].getAttribute('class') == BOUTON_JOUEUR1) {
-        return true;
-    }
-
-    return verifDiagoVersHautGauche(i);
-}
-
-
-
+ */
 function verifModulo(i){
     if( i > i % dimension)
         return verifModulo(i-dimension);
