@@ -1,15 +1,9 @@
-/**
- * Created by florian.flahaut on 11/10/17.
- */
 // les variables globales
 var baseCourant = 10;
 const BOUTON_NEUTRE = "btn btn-default";
 const BOUTON_JOUEUR1 = "btn btn-info";
 const BOUTON_JOUEUR2 = "btn btn-warning";
-const BOUTON_JOUABLE = "btn btn-danger";
-
-var aQuiLeTour = 1; // 1 = Joueur 1 et 2 = Joueur
-
+const BOUTON_JOUABLE = "btn btn-success"
 var tabBoutons = new Array; // Tableau de boutons indicé de [1..dimensionxdimension]
 var dimension; // taille du jeu : dimension = 3 --> Jeu 3x3
 
@@ -32,255 +26,8 @@ function ajouterBouton (colonne, numBouton, valeur) {
     tabBoutons[numBouton].setAttribute('type',"button");
     tabBoutons[numBouton].setAttribute('id',numBouton);
     tabBoutons[numBouton].setAttribute('class',BOUTON_NEUTRE);
-    tabBoutons[numBouton].onclick = function () { couleurClic(numBouton);};
     tabBoutons[numBouton].value = valeur;
     colonne.appendChild(tabBoutons[numBouton]);
-    var divAQui = document.getElementById('affichage');
-    divAQui.innerHTML = 'Joueur : '  + aQuiLeTour;
-}
-
-function couleurClic(i){
-    if(tabBoutons[i].getAttribute('class') != BOUTON_JOUABLE ) {
-        alert('Veuillez cliquer sur une bonne case');
-        return;
-    }
-    if(aQuiLeTour == 1 && tabBoutons[i].getAttribute('class') == BOUTON_JOUABLE) {
-        tabBoutons[i].setAttribute("class", BOUTON_JOUEUR1);
-        aQuiLeTour=2;
-    }
-    if(aQuiLeTour == 2 && tabBoutons[i].getAttribute('class') == BOUTON_JOUABLE){
-        tabBoutons[i].setAttribute("class", BOUTON_JOUEUR2);
-        aQuiLeTour=1;
-    }
-    var divAQui = document.getElementById('affichage');
-    divAQui.innerHTML = 'Joueur : '  + aQuiLeTour;
-    verifSetAttributDe(i);
-    masquerCliquable();
-    afficheCliquable();
-}
-
-function masquerCliquable(){
-    for( var i = 1 ; i < tabBoutons.length ; i++){
-        if(tabBoutons[i].getAttribute('class') == BOUTON_JOUABLE)
-            tabBoutons[i].setAttribute('class', BOUTON_NEUTRE);
-    }
-}
-
-function afficheCliquable() {
-    if (aQuiLeTour == 1) {
-        for (var i = 1; i < tabBoutons.length; i++) {
-            if (tabBoutons[i].getAttribute('class') == BOUTON_JOUEUR2 && verifModulo(i)) {
-                setAttributClassDe(i);
-
-            }
-        }
-    }
-    else {
-        for (var i = 1; i < tabBoutons.length; i++) {
-            if (tabBoutons[i].getAttribute('class') == BOUTON_JOUEUR1 && verifModulo(i)) {
-                setAttributClassDe(i);
-            }
-        }
-    }
-}
-
-function setAttributClassDe(i){
-    try {
-
-        if( i == dimension){ // En haut a droite
-            if (tabBoutons[i - 1].getAttribute('class') == BOUTON_NEUTRE)
-                tabBoutons[i - 1].setAttribute('class', BOUTON_JOUABLE);
-            if (tabBoutons[i + dimension].getAttribute('class') == BOUTON_NEUTRE)
-                tabBoutons[i + dimension].setAttribute('class', BOUTON_JOUABLE);
-            if (tabBoutons[i + dimension - 1].getAttribute('class') == BOUTON_NEUTRE)
-                tabBoutons[i + dimension - 1].setAttribute('class', BOUTON_JOUABLE);
-            return;
-        }
-
-        if( i == dimension*dimension-dimension+1){ // bas gauche
-
-            if (tabBoutons[i + 1].getAttribute('class') == BOUTON_NEUTRE)
-                tabBoutons[i + 1].setAttribute('class', BOUTON_JOUABLE);
-            if (tabBoutons[i - dimension].getAttribute('class') == BOUTON_NEUTRE)
-                tabBoutons[i - dimension].setAttribute('class', BOUTON_JOUABLE);
-            if (tabBoutons[i - dimension + 1].getAttribute('class') == BOUTON_NEUTRE)
-                tabBoutons[i - dimension + 1].setAttribute('class', BOUTON_JOUABLE);
-            return;
-        }
-
-        if (i % dimension == 0) { // col droite
-            if (tabBoutons[i - dimension].getAttribute('class') == BOUTON_NEUTRE)
-                tabBoutons[i - dimension].setAttribute('class', BOUTON_JOUABLE);
-            if (tabBoutons[i - 1].getAttribute('class') == BOUTON_NEUTRE)
-                tabBoutons[i - 1].setAttribute('class', BOUTON_JOUABLE);
-            if (tabBoutons[i + dimension].getAttribute('class') == BOUTON_NEUTRE)
-                tabBoutons[i + dimension].setAttribute('class', BOUTON_JOUABLE);
-            if (tabBoutons[i + dimension - 1].getAttribute('class') == BOUTON_NEUTRE)
-                tabBoutons[i + dimension - 1].setAttribute('class', BOUTON_JOUABLE);
-            if (tabBoutons[i - dimension - 1].getAttribute('class') == BOUTON_NEUTRE)
-                tabBoutons[i - dimension - 1].setAttribute('class', BOUTON_JOUABLE);
-            return;
-        }
-        if (i % dimension == 1) { // col gauche
-            if (tabBoutons[i - dimension].getAttribute('class') == BOUTON_NEUTRE)
-                tabBoutons[i - dimension].setAttribute('class', BOUTON_JOUABLE);
-            if (tabBoutons[i + 1].getAttribute('class') == BOUTON_NEUTRE)
-                tabBoutons[i + 1].setAttribute('class', BOUTON_JOUABLE);
-            if (tabBoutons[i + dimension].getAttribute('class') == BOUTON_NEUTRE)
-                tabBoutons[i + dimension].setAttribute('class', BOUTON_JOUABLE);
-            if (tabBoutons[i + dimension + 1].getAttribute('class') == BOUTON_NEUTRE)
-                tabBoutons[i + dimension + 1].setAttribute('class', BOUTON_JOUABLE);
-            if (tabBoutons[i - dimension + 1].getAttribute('class') == BOUTON_NEUTRE)
-                tabBoutons[i - dimension + 1].setAttribute('class', BOUTON_JOUABLE);
-            return;
-        }
-    }catch (exception_var_1){}
-
-    try { // Le reste
-        if (tabBoutons[i + 1].getAttribute('class') == BOUTON_NEUTRE)
-            tabBoutons[i + 1].setAttribute('class', BOUTON_JOUABLE);
-        if (tabBoutons[i - 1].getAttribute('class') == BOUTON_NEUTRE)
-            tabBoutons[i - 1].setAttribute('class', BOUTON_JOUABLE);
-        if (tabBoutons[i + dimension].getAttribute('class') == BOUTON_NEUTRE)
-            tabBoutons[i + dimension].setAttribute('class', BOUTON_JOUABLE);
-        if (tabBoutons[i - dimension].getAttribute('class') == BOUTON_NEUTRE)
-            tabBoutons[i - dimension].setAttribute('class', BOUTON_JOUABLE);
-        if (tabBoutons[i + dimension + 1].getAttribute('class') == BOUTON_NEUTRE)
-            tabBoutons[i + dimension + 1].setAttribute('class', BOUTON_JOUABLE);
-        if (tabBoutons[i + dimension - 1].getAttribute('class') == BOUTON_NEUTRE)
-            tabBoutons[i + dimension - 1].setAttribute('class', BOUTON_JOUABLE);
-        if (tabBoutons[i - dimension + 1].getAttribute('class') == BOUTON_NEUTRE)
-            tabBoutons[i - dimension + 1].setAttribute('class', BOUTON_JOUABLE);
-        if (tabBoutons[i - dimension - 1].getAttribute('class') == BOUTON_NEUTRE)
-            tabBoutons[i - dimension - 1].setAttribute('class', BOUTON_JOUABLE);
-    }catch (exception_var_1){}
-}
-
-function verifSetAttributDe(i){
-    if(verifColVersHaut(i)) {
-        alert("Il y en a un au dessus");
-    }
-    if(verifColVersBas(i)){
-        alert("Il y en a un en dessous");
-    }
-    if(verifRawVersDroite(i)) {
-        alert("Il y en a un à droite ")
-    }
-     if(verifRawVersGauche(i)) {
-     alert("Il y en a un a gauche");
-     }
-     if(verifDiagoVersHautGauche(i)){
-     alert("Il y en a un vers Haut Gauche");
-     }
-     if(verifDiagoVersHautDroite(i)){
-     alert("Il y en a un vers Haut Droite");
-     }
-     if(verifDiagoVersBasGauche(i)){
-     alert("Il y en a un vers Bas Gauche");
-     }
-     if(verifDiagoVersBasDroite(i)){
-     alert("Il y en a un vers Bas Gauche");
-     }
-    //verifRaw(i);
-    //verifDiago(i);*/
-}
-
- function verifColVersHaut(i) {
-     i -= dimension;
-     if (i < 0)
-         return false;
-     if (aQuiLeTour == 2 && tabBoutons[i].getAttribute('class') == BOUTON_JOUEUR1) {
-         return true;
-     }
-     return verifColVersHaut(i);
- }
-
- function verifColVersBas(i) {
-     i += dimension;
-     if (i > dimension * dimension)
-         return false;
-     if (aQuiLeTour == 2 && tabBoutons[i].getAttribute('class') == BOUTON_JOUEUR1) {
-         return true;
-     }
-     return verifColVersBas(i);
- }
- function verifRawVersDroite(i){
-     i++;
-     if (i % dimension == 1)
-         return false;
-     if (aQuiLeTour == 2 && tabBoutons[i].getAttribute('class') == BOUTON_JOUEUR1) {
-         return true;
-     }
-     return verifRawVersDroite(i);
- }
-function verifRawVersGauche(i){
-    i--;
-    if (i % dimension == 0)
-        return false;
-    if (aQuiLeTour == 2 && tabBoutons[i].getAttribute('class') == BOUTON_JOUEUR1) {
-        return true;
-    }
-    return verifRawVersGauche(i);
-}
-function verifDiagoVersHautDroite(i){
-    if(i%dimension==0)
-        return false;
-    i -= dimension - 1;
-    if (i <= 0 )
-        return false;
-    if (aQuiLeTour == 2 && tabBoutons[i].getAttribute('class') == BOUTON_JOUEUR1) {
-        return true;
-    }
-
-    return verifDiagoVersHautDroite(i);
-}
-
-function verifDiagoVersBasDroite(i){
-    if(i%dimension==1)
-        return false;
-    i += dimension + 1;
-    if (i > dimension*dimension )
-        return false;
-    if (aQuiLeTour == 2 && tabBoutons[i].getAttribute('class') == BOUTON_JOUEUR1) {
-        return true;
-    }
-
-    return verifDiagoVersBasDroite(i);
-}
-function verifDiagoVersBasGauche(i){
-    if(i%dimension==1)
-        return false;
-    i -= dimension - 1;
-    if (i > dimension*dimension )
-        return false;
-    if (aQuiLeTour == 2 && tabBoutons[i].getAttribute('class') == BOUTON_JOUEUR1) {
-        return true;
-    }
-
-    return verifDiagoVersBasGauche(i);
-}
-
-function verifDiagoVersHautGauche(i){
-    if(i%dimension==1)
-        return false;
-    i -= dimension + 1;
-    alert(i);
-    if (i > dimension*dimension )
-        return false;
-    if (aQuiLeTour == 2 && tabBoutons[i].getAttribute('class') == BOUTON_JOUEUR1) {
-        return true;
-    }
-
-    return verifDiagoVersHautGauche(i);
-}
-
-
-
-function verifModulo(i){
-    if( i > i % dimension)
-        return verifModulo(i-dimension);
-
-    return true;
 }
 
 function creerBoutons(colonne,numCol) {
@@ -301,6 +48,8 @@ function creerColonne (plateau,numColonne){
     creerBoutons(divColonne,numColonne);
 }
 
+
+
 function supprimerPlateauJeu() {
     console.log("supprimerPlateauJeu");
     var plateau = document.getElementById("plateau");
@@ -319,18 +68,6 @@ function creerJeu (tailleJeu) {
     plateau.setAttribute('class',"btn-group btn-group-justified");
     plateau.setAttribute('role',"group");
     for (var col=0;col<dimension;col++) creerColonne(plateau,col+1);
-
-    couleurDebut();
-}
-
-function couleurDebut(){
-    var milieu = dimension * dimension / 2;
-    var milieuMilieu = milieu - (dimension/2);
-    tabBoutons[milieuMilieu].setAttribute("class",BOUTON_JOUEUR1);
-    tabBoutons[milieuMilieu+dimension+1].setAttribute("class",BOUTON_JOUEUR1);
-    tabBoutons[milieuMilieu+1].setAttribute("class",BOUTON_JOUEUR2);
-    tabBoutons[milieuMilieu+dimension].setAttribute("class",BOUTON_JOUEUR2);
-    afficheCliquable();
 }
 
 function initPanneauDeCommandes() {
